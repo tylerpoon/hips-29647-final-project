@@ -1,7 +1,5 @@
 #version 300 es 
 
-precision highp float;
-
 #ifdef GL_ES
 precision mediump float;
 #endif
