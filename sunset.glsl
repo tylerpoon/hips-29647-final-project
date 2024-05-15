@@ -19,8 +19,8 @@ void main() {
 
     vec2 sun_coords = vec2(mod(u_time, PI) / PI, abs(sin(u_time)));
 
-    float d = distance(sun_coords, st);
-    float pct = 1.0 - smoothstep(0., 0.1, d);
+    float d = distance(sun_coords, st) * 2.;
+    float pct = 1.0 - smoothstep(0., 0.3, d);
 
     vec3 color = vec3(0.0);
     color = mix(color, color_s, abs(sin(u_time))); 
