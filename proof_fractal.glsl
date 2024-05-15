@@ -69,7 +69,7 @@ void main() {
     float min_b = MIN_B + (LENGTH_B - length_b) / 2.;
 
     vec2 x0 = vec2((length_a * st.x) + min_a, (length_b * st.y) + min_b);
-    vec3 color = vec3(newton_method(x0) % 2 == 0 ? 0. : 1.);
+    vec3 color = vec3(float(newton_method(x0) % 2));
 
     fragColor = vec4(color, 1.0);
 }

@@ -31,6 +31,13 @@ vec3 hsb2rgb( in vec3 c ){
     return c.z * mix(vec3(1.0), rgb, c.y);
 }
 
+float circle(in vec2 _st, in float _radius){
+    vec2 dist = _st-vec2(0.5);
+	return 1.-smoothstep(_radius-(_radius*0.01),
+                         _radius+(_radius*0.01),
+                         dot(dist,dist)*4.0);
+}
+
 float plot (vec2 st, float pct){
   return  smoothstep( pct-0.05, pct, st.y) -
           smoothstep( pct, pct+0.05, st.y);
