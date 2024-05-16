@@ -13,16 +13,49 @@
         body {
             width: 100%;
             height: 100%;
-            margin: 0;
+            margin: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        p {
+            font-size: 20px;
         }
     </style>
 </head>
 
 <body>
-    <h1>Shaders</h1>
-    <p>Reload to restart the animation cycle</p>
-    <p>Goal is to put explain another way math is made material, and make some more interesting shaders</p>
-    <canvas class="glslCanvas" data-fragment="
+    <div>
+        <h1>Shaders</h1>
+        <h2>Introduction</h2>
+        <p>
+            For this project I chose to investigate shaders, a type of program used to render graphics, often for
+            textural or surface effects.
+            I chose to investigate shaders because I had seen incredibly detailed graphics on sites like <a
+                href="https://www.shadertoy.com/">Shader Toy</a> that seemed to arise magically from very little shader
+            code. Since I have no experience in programming shaders, I learned the basics from <a
+                href="https://thebookofshaders.com">The Book of Shaders</a> which is an amazing example of teaching
+            computer science and math using multimedia. In the process of learning from this book and creating shaders,
+            I found that while I
+            came to appreciate shaders as examples of visualizing and materializing math (like in the "Inside Out"
+            reading),
+            my experience creating shaders was distinct from how I've previously engaged with math. Mathematical
+            functions became tactile
+            and responsive in a way that forced me to develop my intuition for the properties and behavior
+            of mathematics and motion. Typically when I see a mathematical visualization I have to reverse-engineer its
+            relationship to mathematics through observation,
+            whereas while creating shaders I approached this relationship from the opposite direction, starting with a
+            mathematical object (e.g. a sine wave, polar coordinates)
+            and constructing visuals from the natural projects of that object. This type of exercise was far more useful
+            for understanding and getting a feel for mathematics than merely seeing a visual,
+            and reinforces that in mathematical learning building a relationship with
+            mathematical objects through practice is most effective. (TODO: conclude this somethow?)
+        </p>
+        <h2>What are shaders</h2>
+        <p></p>
+        <canvas class="glslCanvas" data-fragment="
 #ifdef GL_ES
 precision mediump float;
 #endif
@@ -125,8 +158,8 @@ void main() {
     gl_FragColor = vec4(color, 1.0);
 }
 " width="500" height="500"></canvas>
-
-    <canvas class="glslCanvas" data-fragment="
+        <p>Hello testing testing testing</p>
+        <canvas class="glslCanvas" data-fragment="
 #ifdef GL_ES
 precision mediump float;
 #endif
@@ -276,7 +309,6 @@ void main(){
     color = hsb2rgb(vec3((angle/TWO_PI)+time_mod,radius,1.0));
 
     gl_FragColor = vec4(color,1.0);
-}"
-width="500" height="500"></canvas>
+}" width="500" height="500"></canvas>
 
 </html>
