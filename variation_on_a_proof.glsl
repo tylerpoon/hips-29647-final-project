@@ -8,8 +8,8 @@ uniform vec2 u_resolution;
 uniform float u_time;
 
 float plot(vec2 st, float pct){
-  return  smoothstep( pct-0.001, pct, st.y) -
-          smoothstep( pct, pct+0.001, st.y);
+  return  smoothstep( pct-0.01, pct, st.y) -
+          smoothstep( pct, pct+0.01, st.y);
 }
 
 //This one needs a lot of work but was good practice
@@ -22,7 +22,7 @@ void main() {
 
     float pct = plot(st,y);
     float pct_lin = plot(st, ((2. * x - 2.) + 2. - u_time / 5.) / 3.);
-    vec3 color = pct*vec3(0.0,1.0,0.0) + pct_lin*vec3(0.0, 0.0, 1.0);
+    vec3 color = pct*vec3(0.0,1.0,0.0) + pct_lin*vec3(1.0, 0.0, 0.0);
 
     gl_FragColor = vec4(color,1.0);
 }

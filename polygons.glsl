@@ -1,5 +1,3 @@
-#version 300 es 
-
 #ifdef GL_ES
 precision mediump float;
 #endif
@@ -18,10 +16,13 @@ float polygon(vec2 st, vec2 offset, int sides) {
     return cos(floor(.5+a/r)*r-a)*length(st);
 }
 
-out vec4 fragColor;
 void main() {
     vec2 st = gl_FragCoord.xy/u_resolution;
 
-    vec3 color = vec3(1.0 - smoothstep(0.5, 0.51, polygon(st, vec2(-0.3), 6)));
-    fragColor = vec4(color, 1.0);
+    int sides = int(mod(u_time, 10.));
+
+    float oddshape = 1.0 - smoothstep(0.4, 0.41, polygon(st, vec2(-0.4), sides * 2 + 3));
+    float evenshape = 1.0 - smoothstep(0.4, 0.41, polygon(st, vec2(0.4), sides * 2 + 4));
+    vec3 color = vec3(max(oddshape, evenshape));
+    gl_FragColor = vec4(color, 1.0);
 }

@@ -1,5 +1,3 @@
-#version 300 es 
-
 #ifdef GL_ES
 precision mediump float;
 #endif
@@ -8,12 +6,36 @@ uniform vec2 u_resolution;
 uniform float u_time;
 
 #define ITERS 50
-#define MIN_A -5.
-#define LENGTH_A 10.
-#define MIN_B -5.
-#define LENGTH_B 10. 
+#define MIN_A -50.
+#define LENGTH_A 100.
+#define MIN_B -50.
+#define LENGTH_B 100. 
 
 #define PI 3.14159265359
+
+/// COSH Function (Hyperbolic Cosine)
+float cosh(float val)
+{
+    float tmp = exp(val);
+    float cosH = (tmp + 1.0 / tmp) / 2.0;
+    return cosH;
+}
+ 
+// TANH Function (Hyperbolic Tangent)
+float tanh(float val)
+{
+    float tmp = exp(val);
+    float tanH = (tmp - 1.0 / tmp) / (tmp + 1.0 / tmp);
+    return tanH;
+}
+ 
+// SINH Function (Hyperbolic Sine)
+float sinh(float val)
+{
+    float tmp = exp(val);
+    float sinH = (tmp - 1.0 / tmp) / 2.0;
+    return sinH;
+}
 
 #define cx_mul(a, b) vec2(a.x*b.x - a.y*b.y, a.x*b.y + a.y*b.x)
 #define cx_div(a, b) vec2(((a.x*b.x + a.y*b.y)/(b.x*b.x + b.y*b.y)),((a.y*b.x - a.x*b.y)/(b.x*b.x + b.y*b.y)))
@@ -59,17 +81,21 @@ int newton_method(vec2 x0) {
     return ITERS;
 }
 
-out vec4 fragColor;
+float modI(float a,float b) {
+    float m=a-floor((a+0.5)/b)*b;
+    return floor(m+0.5);
+}
+
 void main() {
     vec2 st = gl_FragCoord.xy/u_resolution;
 
-    float length_a = LENGTH_A / exp(u_time);
-    float min_a = MIN_A + (LENGTH_A - length_a) / 1.25;
-    float length_b = LENGTH_B / exp(u_time);
+    float length_a = LENGTH_A / exp(u_time / 5.);
+    float min_a = MIN_A + (LENGTH_A - length_a) / 1.886797;
+    float length_b = LENGTH_B / exp(u_time / 5.);
     float min_b = MIN_B + (LENGTH_B - length_b) / 2.;
 
     vec2 x0 = vec2((length_a * st.x) + min_a, (length_b * st.y) + min_b);
-    vec3 color = vec3(float(newton_method(x0) % 2));
+    vec3 color = vec3(modI(float(newton_method(x0)), 2.));
 
-    fragColor = vec4(color, 1.0);
+    gl_FragColor = vec4(color, 1.0);
 }
