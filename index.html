@@ -13,7 +13,6 @@
         body {
             width: 100%;
             height: 100%;
-            margin: 20px;
         }
 
         h1 {
@@ -23,11 +22,15 @@
         p {
             font-size: 20px;
         }
+
+        .content {
+            margin: 20px;
+        }
     </style>
 </head>
 
 <body>
-    <div>
+    <div class="content">
         <h1>Shaders</h1>
         <h2>Introduction</h2>
         <p>
@@ -51,10 +54,43 @@
             and constructing visuals from the natural projects of that object. This type of exercise was far more useful
             for understanding and getting a feel for mathematics than merely seeing a visual,
             and reinforces that in mathematical learning building a relationship with
-            mathematical objects through practice is most effective. (TODO: conclude this somethow?)
+            mathematical objects through practice is most effective. While the Tripos method had reams of issues, the
+            emphasis on ridiculous amounts of practice
+            described at Cambridge in Warwick's book, while much less fun than writing shaders, developed a similar sort
+            of relationship between the student and the mathematical objects they worked with. This project gave me some
+            hope for the existence of alternatives or at least more fun and compelling forms of practice. Although
+            mathematics as play is a common idea
+            in modern mathematics pedagogy, this project was one of the rare times where mathematics actually became
+            play for me, and gives me hope that mathematics can be made an object of play instead of fear.
         </p>
-        <h2>What are shaders</h2>
-        <p></p>
+        <h2>What are shaders?</h2>
+        <p>
+            Shaders are computer graphics programs, that as described earlier are often used for textures in 3D graphics
+            (e.g. rendering a floor tile with a glossy texture),
+            although they are incredibly versatile, and as a result are common in the <a
+                href="https://en.wikipedia.org/wiki/Demoscene">demoscene</a> for creating computer-rendered art.
+            The most common shader language is GLSL (OpenGL Shading Language) which is a C/C++ style language.
+            These shaders can be ran on many different platforms, but I'm using WebGL (Web Graphics Library) to run
+            these shaders in the browser.
+            The type of shaders I made for this project are fragment shaders, which work on a per-pixel level, i.e. they
+            give instructions to each individual pixel. Fragment shaders can be thought of as a single program that is
+            ran by each pixel individually in parallel,
+            where the behavior of each pixel only differs based on its location on the screen. The pixels don't know
+            anything
+            about the other pixels on the screen, they just execute the shader program in isolation, although they all
+            can see some universal values
+            like the current time and the location of the mouse. An example of how this type of logic works in practice,
+            is if I wanted to draw a red diagonal line with slope 1 across the screen, I write my shader program "if
+            your x
+            and y coordinates are the same, turn red"
+            so when each pixel on this line runs the shader, it will turn red, rendering our line on the screen.
+            This model of programming might seem weird at first, but it exploits the parallelism of modern GPUs,
+            which have many tiny cores that can execute the shader program for all the pixels in parallel, which is much
+            faster than computing the program for each pixel linearly, one at a time.
+            GPUs also have special optimizations for certain mathematical functions (e.g. the trigonometric functions) which
+            encourages the programmer to use a small toolbox of mathematical functions in clever ways. The specific restrictions
+            on shader programming that allow for efficient rendering make it a creative mathematical endeavor.
+        </p>
         <canvas class="glslCanvas" data-fragment="
 #ifdef GL_ES
 precision mediump float;
