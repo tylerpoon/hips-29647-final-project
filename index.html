@@ -26,6 +26,20 @@
         .content {
             margin: 20px;
         }
+
+        .example {
+            margin-bottom: 100px;
+            margin-top: 100px;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: "row";
+        }
+
+        .explanation {
+            margin-left: 20px;
+        }
     </style>
 </head>
 
@@ -87,11 +101,16 @@
             This model of programming might seem weird at first, but it exploits the parallelism of modern GPUs,
             which have many tiny cores that can execute the shader program for all the pixels in parallel, which is much
             faster than computing the program for each pixel linearly, one at a time.
-            GPUs also have special optimizations for certain mathematical functions (e.g. the trigonometric functions) which
-            encourages the programmer to use a small toolbox of mathematical functions in clever ways. The specific restrictions
+            GPUs also have special optimizations for certain mathematical functions (e.g. the trigonometric functions)
+            which
+            encourages the programmer to use a small toolbox of mathematical functions in clever ways. The specific
+            restrictions
             on shader programming that allow for efficient rendering make it a creative mathematical endeavor.
         </p>
-        <canvas class="glslCanvas" data-fragment="
+        <div class="example">
+            <h2> Variations on a Proof Fractal </h2>
+            <div class="container">
+                <canvas class="glslCanvas" data-fragment="
 #ifdef GL_ES
 precision mediump float;
 #endif
@@ -194,8 +213,16 @@ void main() {
     gl_FragColor = vec4(color, 1.0);
 }
 " width="500" height="500"></canvas>
-        <p>Hello testing testing testing</p>
-        <canvas class="glslCanvas" data-fragment="
+                <p class="explanation">
+                    This shader is a recreation of the fractal from the psychedelic proof in 99 Variations on a Proof.
+                    (TODO)
+                </p>
+            </div>
+        </div>
+        <div class="example">
+            <h2>Variation on a Proof Plot</h2>
+            <div class="container">
+                <canvas class="glslCanvas" data-fragment="
 #ifdef GL_ES
 precision mediump float;
 #endif
@@ -224,9 +251,16 @@ void main() {
 
     gl_FragColor = vec4(color,1.0);
 }" width="500" height="500"></canvas>
-</body>
+                <p class="explanation">
+                    (TODO)
+                </p>
+            </div>
+        </div>
 
-<canvas class="glslCanvas" data-fragment="
+        <div class="example">
+            <h2>TODO</h2>
+            <div class="container">
+                <canvas class="glslCanvas" data-fragment="
 #ifdef GL_ES
 precision mediump float;
 #endif
@@ -256,8 +290,16 @@ void main() {
     color = mix(color, vec3(0.99,0.72,0.07), pct);
     gl_FragColor = vec4(color, 1.0);
 }" width="500" height="500"></canvas>
+                <p class="explanation">
+                    TODO
+                </p>
+            </div>
+        </div>
 
-<canvas class="glslCanvas" data-fragment="
+        <div class="example">
+            <h2>TODO</h2>
+            <div class="container">
+                <canvas class="glslCanvas" data-fragment="
 #ifdef GL_ES
 precision mediump float;
 #endif
@@ -278,8 +320,16 @@ void main(){
 
 	gl_FragColor = vec4( color, 1.0 );
 }" width="500" height="500"></canvas>
+                <p class="explanation">
+                    TODO
+                </p>
+            </div>
+        </div>
 
-<canvas class="glslCanvas" data-fragment="
+        <div class="example">
+            <h2>TODO</h2>
+            <div class="container">
+                <canvas class="glslCanvas" data-fragment="
 #ifdef GL_ES
 precision mediump float;
 #endif
@@ -308,8 +358,16 @@ void main() {
     vec3 color = vec3(max(oddshape, evenshape));
     gl_FragColor = vec4(color, 1.0);
 }" width="500" height="500"></canvas>
+                <p class="explanation">
+                    TODO
+                </p>
+            </div>
+        </div>
 
-<canvas class="glslCanvas" data-fragment="
+        <div class="example">
+            <h2>TODO</h2>
+            <div class="container">
+                <canvas class="glslCanvas" data-fragment="
 #ifdef GL_ES
 precision mediump float;
 #endif
@@ -346,5 +404,12 @@ void main(){
 
     gl_FragColor = vec4(color,1.0);
 }" width="500" height="500"></canvas>
+                <p class="explanation">
+                    TODO
+                </p>
+            </div>
+        </div>
+
+</body>
 
 </html>
