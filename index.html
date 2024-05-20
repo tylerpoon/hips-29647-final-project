@@ -17,6 +17,7 @@
 
         h1 {
             text-align: center;
+            margin-bottom: 5px;
         }
 
         p {
@@ -38,7 +39,13 @@
         }
 
         .explanation {
+            margin-top: 0px;
             margin-left: 20px;
+        }
+
+        .author {
+            margin-top: 5px;
+            text-align: center;
         }
     </style>
 </head>
@@ -46,32 +53,42 @@
 <body>
     <div class="content">
         <h1>Shaders</h1>
+        <h3 class="author">Tyler Poon</h3>
+        <a href="https://github.com/waddlepon/hips-29647-final-project">Source Code</a>
         <h2>Introduction</h2>
         <p>
             For this project I chose to investigate shaders, a type of program used to render graphics, often for
             textural or surface effects.
             I chose to investigate shaders because I had seen incredibly detailed graphics on sites like <a
-                href="https://www.shadertoy.com/">Shader Toy</a> that seemed to arise magically from very little shader
+                href="https://www.shadertoy.com/">Shader Toy</a> that seemed to arise magically from very little
+            shader
             code. Since I have no experience in programming shaders, I learned the basics from <a
                 href="https://thebookofshaders.com">The Book of Shaders</a> which is an amazing example of teaching
-            computer science and math using multimedia. In the process of learning from this book and creating shaders,
+            computer science and math using multimedia. In the process of learning from this book and creating
+            shaders,
             I found that while I
             came to appreciate shaders as examples of visualizing and materializing math (like in the "Inside Out"
             reading),
             my experience creating shaders was distinct from how I've previously engaged with math. Mathematical
             functions became tactile
             and responsive in a way that forced me to develop my intuition for the properties and behavior
-            of mathematics and motion. Typically when I see a mathematical visualization I have to reverse-engineer its
+            of mathematics and motion. Typically when I see a mathematical visualization I have to reverse-engineer
+            its
             relationship to mathematics through observation,
-            whereas while creating shaders I approached this relationship from the opposite direction, starting with a
+            whereas while creating shaders I approached this relationship from the opposite direction, starting with
+            a
             mathematical object (e.g. a sine wave, polar coordinates)
-            and constructing visuals from the natural projects of that object. This type of exercise was far more useful
+            and constructing visuals from the natural projects of that object. This type of exercise was far more
+            useful
             for understanding and getting a feel for mathematics than merely seeing a visual,
             and reinforces that in mathematical learning building a relationship with
-            mathematical objects through practice is most effective. While the Tripos method had reams of issues, the
+            mathematical objects through practice is most effective. While the Tripos method had reams of issues,
+            the
             emphasis on ridiculous amounts of practice
-            described at Cambridge in Warwick's book, while much less fun than writing shaders, developed a similar sort
-            of relationship between the student and the mathematical objects they worked with. This project gave me some
+            described at Cambridge in Warwick's book, while much less fun than writing shaders, developed a similar
+            sort
+            of relationship between the student and the mathematical objects they worked with. This project gave me
+            some
             hope for the existence of alternatives or at least more fun and compelling forms of practice. Although
             mathematics as play is a common idea
             in modern mathematics pedagogy, this project was one of the rare times where mathematics actually became
@@ -79,38 +96,46 @@
         </p>
         <h2>What are shaders?</h2>
         <p>
-            Shaders are computer graphics programs, that as described earlier are often used for textures in 3D graphics
+            Shaders are computer graphics programs, that as described earlier are often used for textures in 3D
+            graphics
             (e.g. rendering a floor tile with a glossy texture),
             although they are incredibly versatile, and as a result are common in the <a
                 href="https://en.wikipedia.org/wiki/Demoscene">demoscene</a> for creating computer-rendered art.
             The most common shader language is GLSL (OpenGL Shading Language) which is a C/C++ style language.
             These shaders can be ran on many different platforms, but I'm using WebGL (Web Graphics Library) to run
             these shaders in the browser.
-            The type of shaders I made for this project are fragment shaders, which work on a per-pixel level, i.e. they
-            give instructions to each individual pixel. Fragment shaders can be thought of as a single program that is
+            The type of shaders I made for this project are fragment shaders, which work on a per-pixel level, i.e.
+            they
+            give instructions to each individual pixel. Fragment shaders can be thought of as a single program that
+            is
             ran by each pixel individually in parallel,
             where the behavior of each pixel only differs based on its location on the screen. The pixels don't know
             anything
-            about the other pixels on the screen, they just execute the shader program in isolation, although they all
+            about the other pixels on the screen, they just execute the shader program in isolation, although they
+            all
             can see some universal values
-            like the current time and the location of the mouse. An example of how this type of logic works in practice,
+            like the current time and the location of the mouse. An example of how this type of logic works in
+            practice,
             is if I wanted to draw a red diagonal line with slope 1 across the screen, I write my shader program "if
             your x
             and y coordinates are the same, turn red"
             so when each pixel on this line runs the shader, it will turn red, rendering our line on the screen.
             This model of programming might seem weird at first, but it exploits the parallelism of modern GPUs,
-            which have many tiny cores that can execute the shader program for all the pixels in parallel, which is much
+            which have many tiny cores that can execute the shader program for all the pixels in parallel, which is
+            much
             faster than computing the program for each pixel linearly, one at a time.
-            GPUs also have special optimizations for certain mathematical functions (e.g. the trigonometric functions)
+            GPUs also have special optimizations for certain mathematical functions (e.g. the trigonometric
+            functions)
             which
             encourages the programmer to use a small toolbox of mathematical functions in clever ways. The specific
             restrictions
             on shader programming that allow for efficient rendering make it a creative mathematical endeavor.
         </p>
-        <div class="example">
-            <h2> Variations on a Proof Fractal </h2>
-            <div class="container">
-                <canvas class="glslCanvas" data-fragment="
+        <h3>Note: Refresh the browser to reset the time if the shaders get messed up</h2>
+            <div class="example">
+                <h2> Variations on a Proof Fractal </h2>
+                <div class="container">
+                    <canvas class="glslCanvas" data-fragment="
 #ifdef GL_ES
 precision mediump float;
 #endif
@@ -213,16 +238,36 @@ void main() {
     gl_FragColor = vec4(color, 1.0);
 }
 " width="500" height="500"></canvas>
-                <p class="explanation">
-                    This shader is a recreation of the fractal from the psychedelic proof in 99 Variations on a Proof.
-                    (TODO)
-                </p>
+                    <p class="explanation">
+                        This shader is a recreation of the fractal from the psychedelic proof in 99 Variations on a
+                        Proof.
+                        Like in the proof in 99 Variations, each pixel represents a point on the complex plane, and
+                        is
+                        colored black
+                        if Newton's method for finding roots converges (within some error threshold) in even
+                        iterations
+                        and white otherwise.
+                        Unlike the picture in 99 Variations, my shader zooms in as time goes by, which emphasizes
+                        the
+                        fractal-like nature of
+                        this "proof". I wouldn't consider the initial picture a proof, and while I don't think the
+                        addition of motion makes it any more of a proof,
+                        it does make it more compelling visually and mathematically.
+                        You may notice that my version looks quite different from the version in the book and that
+                        the
+                        image breaks down the further (e.g. the edges get more jagged and shaky) it zooms in.
+                        This is because as floating point numbers (how computers store decimals) get more precise,
+                        the computer's operations with them get increasingly inaccurate. Computer graphics deals in
+                        approximations,
+                        and almost any visual we come up with will necessitate some error, which makes the question
+                        of computer visual as proof more fraught.
+                    </p>
+                </div>
             </div>
-        </div>
-        <div class="example">
-            <h2>Variation on a Proof Plot</h2>
-            <div class="container">
-                <canvas class="glslCanvas" data-fragment="
+            <div class="example">
+                <h2>Variation on a Proof Plot</h2>
+                <div class="container">
+                    <canvas class="glslCanvas" data-fragment="
 #ifdef GL_ES
 precision mediump float;
 #endif
@@ -251,16 +296,32 @@ void main() {
 
     gl_FragColor = vec4(color,1.0);
 }" width="500" height="500"></canvas>
-                <p class="explanation">
-                    (TODO)
-                </p>
+                    <p class="explanation">
+                        This is another proof of the problem from 99 Variations on a Proof.
+                        The red line graphs the linear function on the right-hand side of the equation, while the
+                        green line graphs the cubic on the left-hand side. Overtime, the shader "moves" North-East
+                        on the graph by shifting the (x,y) coordinate each pixel corresponds to. For example, the
+                        bottom-left
+                        pixel starts out as representing (0,0) on the graph, but at later times will represent
+                        higher coordinates on the graph.
+                        Is there a difference between seeing a larger frame of the graph versus seeing a moving frame
+                        along a graph
+                        in a visual's verasity of a proof? Personally, a static graph intuitively feels more "true" than
+                        one with movement; movement seems to allow for some amount of trickery or illusion.
+                        Similarly to the previous shader, you may notice some inconsistencies with the thickness of the
+                        green line
+                        which is again caused by differences in floating point calculation accuracy at different points
+                        on the graph.
+                        Even for relatively simple objects, the computational limitations for shaders are immediately
+                        apparent.
+                    </p>
+                </div>
             </div>
-        </div>
 
-        <div class="example">
-            <h2>TODO</h2>
-            <div class="container">
-                <canvas class="glslCanvas" data-fragment="
+            <div class="example">
+                <h2>Sine Sunset</h2>
+                <div class="container">
+                    <canvas class="glslCanvas" data-fragment="
 #ifdef GL_ES
 precision mediump float;
 #endif
@@ -290,16 +351,28 @@ void main() {
     color = mix(color, vec3(0.99,0.72,0.07), pct);
     gl_FragColor = vec4(color, 1.0);
 }" width="500" height="500"></canvas>
-                <p class="explanation">
-                    TODO
-                </p>
+                    <p class="explanation">
+                        This shader uses the absolute value of a sine function on the time to create a smooth, periodic
+                        motion that determines the location of the animated sun and the
+                        color on the screen. Every pixel on the screen "mixes" a percentage of light-blue into its color
+                        based on the absolute value of the sine function on time. Then, each pixel calculates the
+                        coordinates of the sun given the
+                        absolute value of a sine function on the time, and based on its distance to that coordinante,
+                        "mixes" a percentage of orange into its color.
+                        This method creates a circle around the center (the coordinate for the sun) with a slight
+                        glowing effect.
+                        While it's a simple example, this shader demonstrates the versatility of mathematical functions
+                        in computer graphics: the sine wave is used for both motion
+                        and color, and with tweaking, many different types of motion could be created using this sine
+                        wave.
+                    </p>
+                </div>
             </div>
-        </div>
 
-        <div class="example">
-            <h2>TODO</h2>
-            <div class="container">
-                <canvas class="glslCanvas" data-fragment="
+            <div class="example">
+                <h2>Circles</h2>
+                <div class="container">
+                    <canvas class="glslCanvas" data-fragment="
 #ifdef GL_ES
 precision mediump float;
 #endif
@@ -320,16 +393,27 @@ void main(){
 
 	gl_FragColor = vec4( color, 1.0 );
 }" width="500" height="500"></canvas>
-                <p class="explanation">
-                    TODO
-                </p>
+                    <p class="explanation">
+                        In the previous shader, the circle was created by mixing an amount of color
+                        based on the distance from the center of the sun. In this shader, we use a strict cutoff
+                        to determine if we should mix any amount of pink, creating uniformly shaded circles. This cutoff
+                        is determined by the absolute value of a sine wave of time, showing that size is yet another
+                        form of motion
+                        which can be constructed with a simple sine wave. To have two circles appear instead of one,
+                        each pixel
+                        calculates it distance from the center of each circle and then uses the minimum distance of
+                        those two distances
+                        to determine if it makes the cutoff to be colored. While this is a very simple example,
+                        combining distance fields (like we did here with the minimum of the distance from each circle)
+                        is an important shader technique that can create all sorts of complex graphics.
+                    </p>
+                </div>
             </div>
-        </div>
 
-        <div class="example">
-            <h2>TODO</h2>
-            <div class="container">
-                <canvas class="glslCanvas" data-fragment="
+            <div class="example">
+                <h2>Polygons</h2>
+                <div class="container">
+                    <canvas class="glslCanvas" data-fragment="
 #ifdef GL_ES
 precision mediump float;
 #endif
@@ -358,16 +442,36 @@ void main() {
     vec3 color = vec3(max(oddshape, evenshape));
     gl_FragColor = vec4(color, 1.0);
 }" width="500" height="500"></canvas>
-                <p class="explanation">
-                    TODO
-                </p>
+                    <p class="explanation">
+                        This shader renders two polygons of increasing sides overtime. It is not immediately obvious (or
+                        at least it wasn't to me)
+                        how to create a polygon of arbitrary side length using a shader. This method works first
+                        translating our coordinates
+                        of (0,0)-(1,1) to coordinates that go from (-1,-1)-(1,1). This places the origin at the center
+                        of the screen. We
+                        can then calculate the angle and distance from the center of our pixel (i.e. polar coordinates)
+                        and use
+                        the angle to calculate which side of the polygon our angle corresponds to.
+                        We then use trigionometry to determine the distance of the straight line from the origin to the
+                        center of the side of the polygon
+                        that our point would lie on (notice this distance is the same for each point on the same side).
+                        This way, we can use a cutoff to only render the polygon for sides up to some distance from the
+                        origin in a way that preserves the shape of the polygon,
+                        as if we were adding extra "thickness" to the polygon instead of adding individual points.
+                        An added offset is used to move the origin of the polygon to different locations on the screen.
+                        This is not an intuitive way to think about drawing a polygon or geometry in general, and
+                        demonstrates
+                        another way in which creating computer graphics forces a different understanding of commmon
+                        mathematical objects
+                        because of its particular model of rendering.
+                    </p>
+                </div>
             </div>
-        </div>
 
-        <div class="example">
-            <h2>TODO</h2>
-            <div class="container">
-                <canvas class="glslCanvas" data-fragment="
+            <div class="example">
+                <h2>Color Wheel</h2>
+                <div class="container">
+                    <canvas class="glslCanvas" data-fragment="
 #ifdef GL_ES
 precision mediump float;
 #endif
@@ -404,11 +508,27 @@ void main(){
 
     gl_FragColor = vec4(color,1.0);
 }" width="500" height="500"></canvas>
-                <p class="explanation">
-                    TODO
-                </p>
+                    <p class="explanation">
+                        There are a few common ways to conceive of colors in mathematics. By default,
+                        GLSL uses RGB, which uses three values corresponding to the amount of red, green, and blue is in
+                        the color.
+                        The color wheel in this shader uses another color space called HSB, with three numbers that
+                        correspond to the hue, saturation, and brightness of a color.
+                        In this shader, the angle of each pixel determines its hue and the radius is determined by its
+                        saturation. All the colors in the shader have max brightness.
+                        I use the modulus of time to rotate the color wheel by changing the corresponding angle of each
+                        pixel. The modulus is another function
+                        that can be used to create periodic motion, although it creates a much more linear motion that a
+                        sine wave.
+                        Different color spaces make certain effects easier or harder to create, since "moving through" a
+                        color space by a function of its coordinates
+                        will create completely different colors. Thinking of color within these different mathematical color spaces
+                        or warping and shaping these color spaces to create an effect requires a combination of mathematical and visual thinking
+                        that bolsters understanding of both math and visual space, which is an example of why I find shaders such an intersting
+                        pedagogical exercise.
+                    </p>
+                </div>
             </div>
-        </div>
 
 </body>
 
