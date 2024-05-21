@@ -619,7 +619,109 @@ void main() {
                     </p>
                 </div>
             </div>
+            <div class="example">
+                <h2>Noisy Sky</h2>
+                <div class="container">
+                    <canvas class="glslCanvas" data-fragment="
+#ifdef GL_ES
+precision mediump float;
+#endif
 
+uniform vec2 u_resolution;
+uniform float u_time;
+
+#define PI 3.14159265359
+
+vec3 color_1 = vec3(0.6549, 0.8902, 0.9686);
+vec3 color_2 = vec3(0.1137, 0.0275, 0.7686);
+
+// 2D Random
+float random (in vec2 st) {
+    return fract(sin(dot(st.xy,
+                         vec2(12.9898,78.233)))
+                 * 43758.5453123);
+}
+
+// 2D Noise based on Morgan McGuire @morgan3d
+// https://www.shadertoy.com/view/4dS3Wd
+float noise (in vec2 st) {
+    vec2 i = floor(st);
+    vec2 f = fract(st);
+
+    // Four corners in 2D of a tile
+    float a = random(i);
+    float b = random(i + vec2(1.0, 0.0));
+    float c = random(i + vec2(0.0, 1.0));
+    float d = random(i + vec2(1.0, 1.0));
+
+    // Smooth Interpolation
+
+    // Cubic Hermine Curve.  Same as SmoothStep()
+    vec2 u = f*f*(3.0-2.0*f);
+    // u = smoothstep(0.,1.,f);
+
+    // Mix 4 coorners percentages
+    return mix(a, b, u.x) +
+            (c - a)* u.y * (1.0 - u.x) +
+            (d - b) * u.x * u.y;
+}
+
+float monster_noise(in vec2 st) {
+    vec2 pos = st + vec2(u_time) * 0.2;
+    float val = 0.;
+
+    val += noise(pos);
+    val += noise(pos * 2.) / 2.;
+    val += noise(pos * 4.) / 4.;
+    val += noise(pos * 8.) / 8.;
+    val /= 1. + 1./2. + 1./4. + 1./8.;
+
+    val = noise(pos + val);
+
+    return val;
+}
+
+void main() {
+    vec2 st = gl_FragCoord.xy/u_resolution;
+    vec3 color = vec3(0.0);
+    vec2 pos = 3.0 * st;
+
+    float val = monster_noise(pos) * 0.5 + monster_noise(pos / 2.) * 0.5;
+    color = vec3(mix(color_1, color_2, val));
+
+    gl_FragColor = vec4(color, 1.0);
+}" width="500" height="500"></canvas>
+                    <p class="explanation">
+                        Randomness in computers is hard to come by. Computers use pseudorandom number generation to
+                        produce randomness, a mathematical process
+                        which takes some seed (i.e. a number) that is used to generate a noisy, "random" output. To
+                        produce randomness in GLSL,
+                        we can use a sine function with a tiny period (the sine waves get smooshed together) and take
+                        the fractional result (the numbers after
+                        the decimal) to
+                        get a "random"-looking output. Because this process is pseudorandom (i.e. is actually
+                        deterministic), notice that if you reset the time (by restarting the browser)
+                        the generated sky will look exactly the same.
+                        To create this shader, we use Perlin noise with our randomness function, which interpolates
+                        across the plane with random
+                        values to give a smooth, but "random"-looking 2D map (look it up on google to see what these
+                        maps look like).
+                        By playing with this noise algorithm, I was able to generate a somewhat realistic, but
+                        "random"-looking
+                        version of a sky.
+                        This technique is super flexible, and noise-based generation is common in computer graphics for
+                        replicating patterns in nature,
+                        like waves or clouds. While there is some complex math involved in generating good-looking
+                        noise, there is certainly
+                        an art to creating a mix of structure and unpredictability that feels realistic and looks
+                        interesting, and an amount of feel and intuition necessary to transform noise into a
+                        compelling graphic.
+                        Even though the visual is generated "randomly", the process of making this shader felt the most
+                        creative out of all of them, as I felt like I was trying to tame mathematics instead of merely
+                        command it.
+                    </p>
+                </div>
+            </div>
 </body>
 
 </html>
